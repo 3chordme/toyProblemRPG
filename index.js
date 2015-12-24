@@ -8,11 +8,28 @@
 //
 // When you finish add more complexity!
 
+// function Mammal(){
+// }
+// Mammal.prototype.breathe = function(){
+    // do some breathing
+// }
+// function Cat(){
+// }
+// Cat.prototype = new Mammal()
+// Cat.prototype.constructor = Cat
+// now cat too can breathe!
+
+// var Character = function() {
+//   this.name = name;
+//   this.hp = hp;
+//   this.weapon = weapon;
+// }
+
 var Hero = function(name, hp, weapon) {
   this.name = name;
   this.hp = hp;
   this.weapon = weapon;
-  this.eat = function(food) {
+  this.eatFood = function(food) {
     this.hp += food.hp;
     console.log("\n", this.name + " eats " + food.name + ", gaining " + food.hp + "HP. Yum!");
   };
@@ -27,7 +44,7 @@ var Troll = function(battleName, hp, weapon) {
   this.eatHero = function(target, dmg) {
     target.hp -= dmg;
     this.hp += dmg;
-    console.log("\n", this.name + " bites " + target.name + ", stealing " + dmg + " of their HP!");
+    console.log("\n", this.name + " eats part of " + target.name + ", stealing " + dmg + " of their HP!");
   };
   this.grunt = function() {
     console.log("\n", this.name + " grunts ineffectively. It smells like old cheese.");
@@ -37,12 +54,12 @@ var Troll = function(battleName, hp, weapon) {
 };
 
 var meleeAttack = function(target, dmg) {
-  console.log("\n", target.name + " has been hit for " + dmg + " damage!");
+  console.log("\n", this.name + " attacks " + target.name + " and deals " + dmg + " damage!");
   target.hp -= dmg;
 };
 
 var weaponAttack = function(target, dmg, weapon) {
-  console.log("\n", this.name + " attacks " + target + " with " + this.weapon.name);
+  console.log("\n", this.name + " attacks " + target.name + " with " + this.weapon.name);
   dmg *= this.weapon.multiplier;
   target.hp -= dmg;
   console.log("\n", target.name + " has been hit for " + dmg + " damage!");
@@ -51,13 +68,24 @@ var weaponAttack = function(target, dmg, weapon) {
   }
 };
 
+var deathCheck = function(victim) {
+  if (victim.hp <= 0) {
+    console.log("\n", victim.name + " has been killed!");
+    for (var key in victim) {
+      victim[key] = "DEAD";
+    }
+  }
+};
+
 var spiderman = new Hero("Peter Parker", 100, { name: "Webs", multiplier: 1.1 });
-var batman = new Hero("Bruce Wayne", 10, { name: "Batarang", multiplier: 1.5 });
+var batman = new Hero("Bruce Wayne", 40, { name: "Batarang", multiplier: 1.5 });
 
 var urg = new Troll("Urg the Destroyer", 70, { name: "Club", multiplier: 1.2 });
 var thurg = new Troll("Thurg, Troll King", 120, { name: "Battle Axe", multiplier: 1.7 });
 
-var damage = Math.floor(Math.random() * 5);
+var damage = function() {
+  return Math.floor(Math.random() * 40) + 1;
+};
 
 var breakdown = function() {
   console.log("\nTHE BREAKDOWN:\n");
@@ -65,52 +93,15 @@ var breakdown = function() {
   console.log("BATMAN Name: ", batman.name, " HP: ", batman.hp, " Weapon: ", batman.weapon.name);
   console.log("URG Battle Name: ", urg.name, " HP: ", urg.hp, " Weapon: ", urg.weapon.name);
   console.log("THURG Battle Name: ", thurg.name, " HP: ", thurg.hp, " Weapon: ", thurg.weapon.name);
-}
+};
 
 breakdown();
-urg.bite(spiderman, damage);
+urg.bite(spiderman, damage());
 breakdown();
-thurg.grunt();
+spiderman.attack(thurg, damage());
 breakdown();
-spiderman.punch(thurg, damage);
+batman.eatFood({ name: "apple", hp: 3 });
 breakdown();
-batman.attack(urg, damage);
+urg.bite(spiderman, damage());
 breakdown();
-urg.bite(batman, damage);
-breakdown();
-batman.eat({ name: "apple", hp: 3 });
-breakdown();
-urg.bite(spiderman, damage);
-breakdown();
-thurg.grunt();
-breakdown();
-spiderman.punch(thurg, damage);
-breakdown();
-batman.attack(urg, damage);
-breakdown();
-urg.bite(batman, damage);
-breakdown();
-batman.eat({ name: "cherry pie", hp: 7 });breakdown();
-urg.bite(spiderman, damage);
-breakdown();
-thurg.grunt();
-breakdown();
-spiderman.punch(thurg, damage);
-breakdown();
-batman.attack(urg, damage);
-breakdown();
-urg.bite(batman, damage);
-breakdown();
-batman.eat({ name: "whiskey", hp: -3 });breakdown();
-urg.bite(spiderman, damage);
-breakdown();
-thurg.grunt();
-breakdown();
-spiderman.punch(thurg, damage);
-breakdown();
-batman.attack(urg, damage);
-breakdown();
-urg.bite(batman, damage);
-breakdown();
-batman.eat({ name: "cheese moon", hp: 100 });
-breakdown();
+thurg.bite(batman, damage());
