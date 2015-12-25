@@ -1,3 +1,5 @@
+//ORIGINAL INSTRUCTIONS:
+//
 // You are working on a video game. Create contructor functions for:
 //
 // Hero: has name, life points, preferred weapon.
@@ -24,6 +26,39 @@
 //   this.hp = hp;
 //   this.weapon = weapon;
 // }
+//
+//
+//GAME:
+
+
+//////////////////////////////////////
+//  BATMAN AND SPIDERMAN VS. TROLLS //
+//////////////////////////////////////
+
+//START
+//Hero creation
+function creation() {
+	//var userName = prompt("What is your name?");
+	var userName = "David";
+	console.log("From henceforth, you shall be known as ", userName, ", the Troll Fighter");
+}
+
+function lapse(func, order) {
+	setTimeout(function(){func()}, (order * 1000));
+}
+
+lapse(creation, 1);
+
+setTimeout(function(){
+	console.log("Welcome to...")
+}, 1000);
+
+setTimeout(function(){console.log("BATMAN AND SPIDERMAN VERSUS TROLLS")}, 2000);
+
+setTimeout(function(){console.log("pausing");}, 4000);
+
+setTimeout(function(){console.log("pausing");}, 5000);
+
 
 var Hero = function(name, hp, weapon) {
   this.name = name;
